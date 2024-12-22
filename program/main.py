@@ -417,7 +417,10 @@ def Menu():
             case 3:
                 CompileAndExec_CPU()
             case 4:
-                CompileAndExec_GPU()
+                if is_gpu_available:
+                    CompileAndExec_GPU()
+                else:
+                    print(RED, "   GPU is not available", RESET)
             case 5:
                 SetDefaultSettings()
                 ShowEnvVar()
