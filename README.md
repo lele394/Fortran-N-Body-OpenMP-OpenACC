@@ -120,7 +120,7 @@ We currently have unresolved issues with loading the data when switching the ind
 
 ![speedup](rsc/GPU-CPU_speedup.png)
 
-Done on a 48T CPU. Issue with multithreading past 23T may be present, thus the 23/48 small difference.
+Done on a 48T CPU. Issue with multithreading past 23T may be present, thus the 23/48 small difference. GPU done with FP64 precision.
 
 
 
