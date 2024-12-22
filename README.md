@@ -116,7 +116,11 @@ Multiple development versions are available in the `development` folder
 
 We currently have unresolved issues with loading the data when switching the indices of the array. However, the simulation is working as expected. For this reason the available code does not include the array index switch optimization. Benchmarks have been done, and the  
 
+### Speedup
 
+![speedup](rsc/GPU-CPU_speedup.png)
+
+Done on a 48T CPU. Issue with multithreading past 23T may be present, thus the 23/48 small difference.
 
 
 

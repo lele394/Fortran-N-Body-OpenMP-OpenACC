@@ -165,14 +165,16 @@ Figures \ref{fig:rmsd} and \ref{fig:std_dev} show the RMSD and SD, respectively.
 \subsection{Speedup}
 The thread-based speed-up plot shown in \ref{fig:speedup} illustrates the program's performance improvement as a function of the number of threads, using the reference execution time determined from the heatmap's optimal settings. As expected, the execution time for a single thread is constant across all scheduling modes. However, the dynamic mode stands out, achieving a significantly higher speed-up compared to other modes.
 
+A closer inspection reveals that the observed speed-up aligns well with Amdahl's Law\footnote{Gustafson, J.L. (2011). Amdahl’s Law. In: Padua, D. (eds) Encyclopedia of Parallel Computing. Springer, Boston, MA. https://doi.org/10.1007/978-0-387-09766-4_77}, which states that the maximum achievable speed-up is limited by the fraction of the code that can be parallelized. With an estimated 95\%+ of the code parallelized during execution, the speed-up trends closely follow the theoretical curve until thread 23, where performance dips due to resource contention caused by hyperthreading\footnote{This occurs when multiple threads compete for shared resources, such as the L2 cache, without effective cache-sharing mechanisms, leading to reduced performance.}. 
+
+Interestingly, while the static schedule follows Amdahl's predictions more closely, the dynamic schedule overshoots the expected speed-up, demonstrating superior performance up to thread 23. This highlights the importance of choosing an appropriate scheduling strategy, as it significantly influences the parallel performance and overall efficiency.
+
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.6\textwidth]{graph/TB_SU_ref-dynamic.png}
-    \caption{Energy conservation for a program running on a single thread and parallelism disabled.}
+    \caption{Thread-based speedup with a dynamic schedule as reference.}
     \label{fig:speedup}
 \end{figure}
-
-We note that past the 23rd thread threshold, performance dips quite dramatically and seems capped. The current understanding blames it on threads competing for shared ressources due to Hyperthreading\footnote{This occurs when multiple threads compete for shared resources, such as the L2 cache, without effective cache sharing mechanisms, leading to reduced performance.}.
 
 \subsection{Efficiency}
 Efficiency, defined as the speedup divided by the number of threads, reveals how well parallel computation utilizes available resources. \ref{fig:efficiency} demonstrates a sharp decline in efficiency as the number of threads increases, particularly after the 24th thread, due to resource contention such as L2 cache competition from hyperthreading. Achieving efficiencies above 100\% is rare and requires precise optimization, particularly in data distribution and algorithm tuning. In this case, the efficiency falls short of 100\%, indicating room for further optimization.
@@ -255,19 +257,19 @@ Since we have already demonstrated that the deviation between the MT and ST impl
 
 \begin{figure}[h!]
     \centering
-    \begin{minipage}{0.45\textwidth}
+    \begin{minipage}{0.3\textwidth}
         \centering
         \includegraphics[width=\textwidth]{graph/RMSD_CPU-GPU.png}
         \caption{RMSD comparison between MT and GPU simulations.}
         \label{fig:rmsd_gpu}
     \end{minipage}\hfill
-    \begin{minipage}{0.45\textwidth}
+    \begin{minipage}{0.3\textwidth}
         \centering
         \includegraphics[width=\textwidth]{graph/std-dev_CPU_GPU.png}
         \caption{SD comparison between MT and GPU simulations.}
         \label{fig:std_dev_gpu}
     \end{minipage}
-    \begin{minipage}{0.45\textwidth}
+    \begin{minipage}{0.3\textwidth}
         \centering
         \includegraphics[width=\textwidth]{graph/E_GPUCPU.png}
         \caption{Energy comparison between MT and GPU simulations.}
