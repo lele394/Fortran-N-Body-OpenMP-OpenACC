@@ -10,7 +10,10 @@ Please report to the following [report](./Léo%20Bechet%20N-Body%20HPC%20report.
 
 ## Demo
 
-A python script called `main.py` can be found inside the `program` folder. Executing it will  display a demo menu for the code. Multiple options are available to fine tune your experience.
+You can test the program using `run.sh`. Alternatively, a python script called `main.py` can be found inside the `program` folder. Executing it will  display a demo menu for the code. Multiple options are available to fine tune your experience.
+
+You can also check a demo of this program [here](https://www.youtube.com/watch?v=KcrgcPCYEyM)
+
 
 ## Advanced usage
 
