@@ -126,8 +126,29 @@ We currently have unresolved issues with loading the data when switching the ind
 Done on a 48T CPU. Issue with multithreading past 23T may be present, thus the 23/48 small difference. GPU done with FP64 precision.
 
 
+## Additional plots
 
-
-
+<table>
+    <tr>
+        <th>Dynamic</th>
+        <th>Guided</th>
+        <th>Static</th>
+    </tr>
+    <tr>
+        <td><img src="rsc/annexe/ET_dynamic.png" alt="ET Dynamic" /></td>
+        <td><img src="rsc/annexe/ET_guided.png" alt="ET Guided" /></td>
+        <td><img src="rsc/annexe/ET_static.png" alt="ET Static" /></td>
+    </tr>
+    <tr>
+        <td><img src="rsc/annexe/Heat_dynamic.png" alt="Heat Dynamic" /></td>
+        <td><img src="rsc/annexe/Heat_guided.png" alt="Heat Guided" /></td>
+        <td><img src="rsc/annexe/Heat_static.png" alt="Heat Static" /></td>
+    </tr>
+    <tr>
+        <td><img src="rsc/annexe/TB_SU_ref-dynamic.png" alt="TB SU Dynamic" /></td>
+        <td><img src="rsc/annexe/TB_SU_ref-guided.png" alt="TB SU Guided" /></td>
+        <td><img src="rsc/annexe/TB_SU_ref-static.png" alt="TB SU Static" /></td>
+    </tr>
+</table>
 
 
