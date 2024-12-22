@@ -1,4 +1,4 @@
-# OpenMP and OpenACC N-Body simulation with GPU acceleration on GPU
+# OpenMP and OpenACC N-Body simulation with GPU acceleration
 
 
 ![logo](rsc/logo.png)
