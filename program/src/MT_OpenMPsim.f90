@@ -16,7 +16,7 @@ program sim
     integer, parameter :: number_of_steps = 750
 
     ! Mass ===================
-    real(8) :: mass = 1.0/n_stars
+    ! real(8) :: mass = 1.0/n_stars
     
     ! Time parameters ========
     real(8) :: dt = 0.005  ! Time step for the integration
@@ -39,6 +39,7 @@ program sim
     !==============================================================
     ! Arrays ==================
     real(8), dimension(:,:), allocatable :: positions, velocities, accelerations, accelerations_i
+    real(8), dimension(:), allocatable :: masses
     ! note arrays are as allocatable, fortran has built-in pointer swap with move_alloc it seems.
 
     ! vars ====================
@@ -61,6 +62,7 @@ program sim
     allocate(velocities(n_stars, 3))
     allocate(accelerations(n_stars, 3))
     allocate(accelerations_i(n_stars, 3))
+    allocate(masses(n_stars))
 
 
 
@@ -80,7 +82,10 @@ program sim
     read(10) velocities
     close(10)
 
-
+    ! Load masses
+    open(unit=10, file='data/masses.dat', form='unformatted', access='stream')
+    read(10) masses
+    close(10)
 
 
 
@@ -103,6 +108,10 @@ program sim
     ! Accelerations_i array
     print *, 'accelerations_i array (in bytes): ', size(accelerations_i) * kind(accelerations_i)
     print '(A,Z16)', 'Memory offset of accelerations_i array: 0x', LOC(accelerations_i)
+
+    ! masses array
+    print *, 'masses array (in bytes): ', size(masses) * kind(masses)
+    print '(A,Z16)', 'Memory offset of masses array: 0x', LOC(masses)
     print *, "=================================="
     
 
@@ -127,7 +136,7 @@ program sim
 
     ! Parallel zone declaration ========================================================
     !$omp parallel private(i, j, dp, f_vec, i_pos_cache, i_accel_cache) default(none) shared(accelerations_i, &
-    !$omp& mass, ep, ec, do_E, positions, velocities,&
+    !$omp& masses, ep, ec, do_E, positions, velocities,&
     !$omp& dt,  accelerations, epsilon, G, do_V)
 
 
@@ -143,7 +152,7 @@ program sim
             ! Compute the distance vector between stars i and j
             dp = positions(j, :) - i_pos_cache
 
-            f_vec = (G * mass / (sqrt(sum(dp**2) + epsilon**2)**3)) * dp ! compute the interaction force between the objects
+            f_vec = (G * masses(j) / (sqrt(sum(dp**2) + epsilon**2)**3)) * dp ! compute the interaction force between the objects
 
             i_accel_cache = i_accel_cache + f_vec
             accelerations_i(j, :) = accelerations_i(j, :) - f_vec ! Takes advantage of the anti-symmetry
@@ -203,7 +212,7 @@ program sim
                 ! Compute the distance vector between stars i and j
                 dp = positions(j, :) - i_pos_cache
 
-                f_vec = (G * mass / (sqrt(sum(dp**2) + epsilon**2)**3)) * dp ! compute the interaction force between the objects
+                f_vec = (G * masses(j) / (sqrt(sum(dp**2) + epsilon**2)**3)) * dp ! compute the interaction force between the objects
 
                 i_accel_cache = i_accel_cache + f_vec
                 accelerations_i(j, :) = accelerations_i(j, :) - f_vec ! Takes advantage of the anti-symmetry
@@ -240,7 +249,7 @@ program sim
         
         ! kinetic energy
         if (do_E) ec = ec + sum(velocities**2)
-        if (do_E) write(12, *) 0.5*ep*mass**2, ec*0.5*mass
+        if (do_E) write(12, *) sum(0.5*ep*masses**2), sum(ec*0.5*masses)
         ! Swap pointers (no data copying)
         call swap_array(accelerations, accelerations_i)
         !$omp end master
