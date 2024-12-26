@@ -12,7 +12,7 @@ program sim
     !==============================================================
 
     ! Main parameters ========
-    integer, parameter :: n_stars = 3000
+    integer, parameter :: n_stars = 400
     integer, parameter :: number_of_steps = 750
 
     ! Mass ===================
@@ -196,6 +196,8 @@ program sim
             ! Initialize the new acceleration for the current star
             ! Loop over all other stars to compute the gravitational acceleration
             i_pos_cache = positions(i, :)
+            i_accel_cache = 0.0
+
             do j = i + 1, n_stars
 
                 ! Compute the distance vector between stars i and j
@@ -203,7 +205,7 @@ program sim
 
                 f_vec = (G * mass / (sqrt(sum(dp**2) + epsilon**2)**3)) * dp ! compute the interaction force between the objects
 
-                accelerations_i(i, :) = accelerations_i(i, :) + f_vec
+                i_accel_cache = i_accel_cache + f_vec
                 accelerations_i(j, :) = accelerations_i(j, :) - f_vec ! Takes advantage of the anti-symmetry
 
                 ! Energy computation for potential energy (x2 because of symmetry)
@@ -214,6 +216,7 @@ program sim
                 end if
 
             end do
+            accelerations_i(i, :) = i_accel_cache + accelerations_i(i, :) 
         end do
         !$omp end do
         !==============================================================================
@@ -271,7 +274,3 @@ contains
     end subroutine swap_array
 
 end program sim
-
-
-
-

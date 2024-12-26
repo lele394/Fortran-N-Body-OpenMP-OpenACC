@@ -85,7 +85,7 @@ def load_file(filename: str, nbline: int = 0, timestep: int = -1, param: list = 
 
 
 
-
+size = 3
 
 def anim_realTime(file: str, figs: tuple):
     # This function create an animation of the particles in real time.
@@ -102,6 +102,8 @@ def anim_realTime(file: str, figs: tuple):
         #     t (int): time step to read
 
         data = load_file(file, param[0], t, param)
+        # print(t)
+        # print(data)
         graph._offsets3d = (data[0, :], data[1, :], data[2, :])
 
     # Get parameters
@@ -118,9 +120,9 @@ def anim_realTime(file: str, figs: tuple):
     fig = plt.figure(figsize = sfig, facecolor = 'k', num = 1)
     ax = fig.add_subplot(111, projection='3d')
     ax.set_box_aspect([1, 1, 1])
-    ax.axes.set_xlim3d(left=-3, right=3) 
-    ax.axes.set_ylim3d(bottom=-3, top=3) 
-    ax.axes.set_zlim3d(bottom=-3, top=3)
+    ax.axes.set_xlim3d(left=-size, right=size) 
+    ax.axes.set_ylim3d(bottom=-size, top=size) 
+    ax.axes.set_zlim3d(bottom=-size, top=size)
     ax.tick_params(axis='x', colors='w', which='both')
     ax.tick_params(axis='y', colors='w', which='both')
     ax.tick_params(axis='z', colors='w', which='both')
@@ -138,11 +140,13 @@ def anim_realTime(file: str, figs: tuple):
     plt.tight_layout(pad=1)
 
     # Plot data
-    graph = ax.scatter(data[0, :], data[1, :], data[2, :], s=2, c='w', linewidths=0)
+    # colors = ['y', 'r', 'g', 'c']
+    colors = 'w'
+    graph = ax.scatter(data[0, :], data[1, :], data[2, :], s=8, c=colors, linewidths=2)
 
     # Animate
     ani = matplotlib.animation.FuncAnimation(fig, update_graph, param[1],
-                            interval=1, blit=False)
+                            interval=10, blit=False)
                             
     plt.show()
 
@@ -153,7 +157,7 @@ if __name__ == '__main__':
     ####################################
 
     # Path to the file
-    filepath_pos = 'position.dat'
+    filepath_pos = 'out_data/position.dat'
 
     # Size of the output plot (in pixels)
     figs = (720, 720)
