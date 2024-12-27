@@ -12,8 +12,8 @@ program sim
     !==============================================================
 
     ! Main parameters ========
-    integer, parameter :: n_stars = 400
-    integer, parameter :: number_of_steps = 750
+    integer, parameter :: n_stars = 3
+    integer, parameter :: number_of_steps = 5000
 
     ! Mass ===================
     ! real(8) :: mass = 1.0/n_stars
@@ -26,7 +26,7 @@ program sim
     logical :: do_E = .True.
     
     ! Physics settings =======
-    real(8) :: epsilon = 0.05
+    real(8) :: epsilon = 0.00000000
     real(8) :: G = 1.0
     !==============================================================
 
@@ -133,6 +133,10 @@ program sim
     print *, "=============== STARTING SIM ==================="
 
     
+    print *, positions
+    print *, velocities
+    print *, masses
+
 
     ! Parallel zone declaration ========================================================
     !$omp parallel private(i, j, dp, f_vec, i_pos_cache, i_accel_cache) default(none) shared(accelerations_i, &
@@ -177,9 +181,10 @@ program sim
     do n = 1, number_of_steps
 
         !$omp master
-        if (mod(n, 50) == 0) then
+        if (mod(n, 500) == 0) then
             print *, 'Iteration ', n, ': ', n, '/', number_of_steps, ' ', real(n)/real(number_of_steps)*100.0, '%'
         end if
+
         
         ! energy reset
         if (do_E) ec = 0.0

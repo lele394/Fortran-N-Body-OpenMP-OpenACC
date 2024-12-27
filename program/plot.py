@@ -2,7 +2,7 @@
 
 # Author: Barnabé DEFORET
 
-speed = int(2)
+speed = int(20)
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -85,7 +85,7 @@ def load_file(filename: str, nbline: int = 0, timestep: int = -1, param: list = 
 
 
 
-size = 3
+size = 3e0
 
 def anim_realTime(file: str, figs: tuple):
     # This function create an animation of the particles in real time.
@@ -105,6 +105,7 @@ def anim_realTime(file: str, figs: tuple):
         # print(t)
         # print(data)
         graph._offsets3d = (data[0, :], data[1, :], data[2, :])
+        # graph._offsets3d = (data[2, :], data[1, :], data[0, :])
 
     # Get parameters
     param = load_file(file)
@@ -146,7 +147,7 @@ def anim_realTime(file: str, figs: tuple):
 
     # Animate
     ani = matplotlib.animation.FuncAnimation(fig, update_graph, param[1],
-                            interval=10, blit=False)
+                            interval=1000/60, blit=False)
                             
     plt.show()
 

@@ -1,5 +1,6 @@
 cd ./program
 python init_data.py
+# python stable_2body.py
 
 
 # gfortran -fopenmp -O3 -o bin/CPU.o src/MT_OpenMPsim.f90
