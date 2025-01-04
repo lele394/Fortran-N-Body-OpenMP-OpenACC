@@ -7,6 +7,10 @@
 
 Please report to the following [report](./Léo%20Bechet%20N-Body%20HPC%20report.pdf) for more explanations.
 
+## License
+
+This work is provided under the [CC-BY-NC-SA](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en) licence.
+
 
 ## Demo
 
