@@ -13,7 +13,7 @@ program sim
 
     ! Main parameters ========
     integer, parameter :: n_stars = 3
-    integer, parameter :: number_of_steps = 5000
+    integer, parameter :: number_of_steps = 50000
 
     ! Mass ===================
     ! real(8) :: mass = 1.0/n_stars
